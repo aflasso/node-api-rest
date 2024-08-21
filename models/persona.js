@@ -3,15 +3,27 @@ const { bdmysql } = require('../database/MariaDbConnection');
 
 
 
-const User = bdmysql.define('User', {
-    username: {
+const User = bdmysql.define('Users', {
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull:false,
+        primaryKey: true
+    },
+
+    usuario: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
+    passwor: {
         type: DataTypes.STRING,
         allowNull: false
     }
-});
+},
 
-module.exports = User;
+{tableName: "Users",
+    timestamps: false
+}
+
+);
+
+module.exports = {User};
