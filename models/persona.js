@@ -6,6 +6,7 @@ const { bdmysql } = require('../database/MariaDbConnection');
 const User = bdmysql.define('Users', {
     id: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
 

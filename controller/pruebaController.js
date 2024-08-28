@@ -113,11 +113,11 @@ const userPost = async (req = request, res = response) => {
 }
 
 const userDelete = async (req = request, res = response) => {
-
-    const {id} = req.params
+    console.log("entre")
+    const {userId} = req.params
 
     try {
-        const existingUser = await User.findByPk(id)
+        const existingUser = await User.findByPk(userId)
 
         if (!existingUser) {
 
@@ -125,7 +125,7 @@ const userDelete = async (req = request, res = response) => {
 
         }
 
-        await existingUser.update({activo: 0})
+        await existingUser.destroy()
 
         res.json({ok:true, usuario: existingUser})
 
