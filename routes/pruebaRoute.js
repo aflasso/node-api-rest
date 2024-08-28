@@ -4,7 +4,9 @@ const { Router } = require('express');
 
 
 const { pruebaGet,
-    userByIdGet
+    userByIdGet,
+    usersByActive,
+    usersByDeactive
     //pruebaPost,
     //pruebaPut,
     //pruebaDelete,
@@ -21,7 +23,11 @@ const router = Router();
 
 router.get('/', pruebaGet);
 
-router.get('/:userId', userByIdGet)
+router.get('/active', usersByActive);
+
+router.get('/deactive', usersByDeactive);
+
+router.get('/:userId', userByIdGet);
 
 
 //router.post('/', usuariosPost);

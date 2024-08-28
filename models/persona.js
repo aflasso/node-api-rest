@@ -17,7 +17,24 @@ const User = bdmysql.define('Users', {
     passwor: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+
+    email : {
+        type: DataTypes.STRING,
+        
+    },
+
+    fecha_creacion: {
+        type: DataTypes.DATE,
+        
+    },
+
+    activo: {
+        type: DataTypes.BOOLEAN,
+        
     }
+
+    
 },
 
 {tableName: "Users",

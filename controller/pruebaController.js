@@ -46,8 +46,38 @@ const userByIdGet = (req = request, res = response) => {
 
 }
 
+const usersByActive = (req = request, res = response) => {
+    console.log("la mamita de martin")
+        User.findAll({where: {
+            activo : 1
+        }}).then(users => {
+            console.log(users)
+            res.json(users)
+        }).catch(error => {
+            console.error('Error al obtener los usuarios activos')
+            res.status(404).send('usuario no encontrado')
+        })
+
+}
+
+const usersByDeactive = (req = request, res = response) => {
+    console.log("la mamita de martin")
+        User.findAll({where: {
+            activo : 0
+        }}).then(users => {
+            console.log(users)
+            res.json(users)
+        }).catch(error => {
+            console.error('Error al obtener los usuarios activos')
+            res.status(404).send('usuario no encontrado')
+        })
+
+}
+
 
 module.exports = {
     pruebaGet,
-    userByIdGet
+    userByIdGet,
+    usersByActive,
+    usersByDeactive
 }
