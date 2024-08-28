@@ -6,7 +6,6 @@ const { bdmysql } = require('../database/MariaDbConnection');
 const User = bdmysql.define('Users', {
     id: {
         type: DataTypes.INTEGER,
-        allowNull:false,
         primaryKey: true
     },
 
@@ -18,23 +17,16 @@ const User = bdmysql.define('Users', {
         type: DataTypes.STRING,
         allowNull: false
     },
-
-    email : {
-        type: DataTypes.STRING,
-        
+    email: {
+        type:DataTypes.STRING
     },
-
     fecha_creacion: {
-        type: DataTypes.DATE,
-        
+        type: DataTypes.DATE
     },
-
     activo: {
-        type: DataTypes.BOOLEAN,
-        
+        type: DataTypes.TINYINT
     }
 
-    
 },
 
 {tableName: "Users",
