@@ -14,6 +14,7 @@ class Server {
         this.pathsMySql = {
             auth: '/api/auth',
             prueba: '/api/prueba',
+            pokemon: '/api/pokemon'
 
         }
 
@@ -40,6 +41,7 @@ class Server {
     routes() { 
         //this.app.use(this.pathsMySql.auth, require('../routes/MySqlAuth'));
         this.app.use(this.pathsMySql.prueba, require('../routes/pruebaRoute'));
+        this.app.use(this.pathsMySql.pokemon, require('../routes/pokemonRoute'));
     }
 
     middlewares() {

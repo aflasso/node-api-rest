@@ -1,6 +1,7 @@
 const {response, request} = require('express')
 const {User} = require('../models/persona');
 const { where } = require('sequelize');
+const bcrypt = require('bcrypt');
 
 
 const pruebaGet = (req, res = response) => {
@@ -81,33 +82,35 @@ const userPost = async (req = request, res = response) => {
 
     const {user, password, email} = req.body
 
-    User.findOne({where: {email: email}})
-        .then(existingUser => {
-            if (existingUser) {
-                console.log('El usuario ya existe')
-                res.status(400).json({ message: 'El usuario ya existe' });
-            } else {
+    try {
+        // Verificar que la contraseña sea una cadena
+        if (typeof password !== 'string') {
+            return res.status(400).json({ message: 'La contraseña debe ser una cadena de texto' });
+        }
 
-                return User.create({
+        // Verificar si el usuario ya existe
+        const existingUser = await User.findOne({ where: { email: email } });
 
-                    usuario: user,
-                    passwor: password,
-                    email: email
-    
-                });
-            }
-        })
-        .then(newUser => {
+        if (existingUser) {
+            return res.status(400).json({ message: 'El usuario ya existe' });
+        }
 
-            if (newUser) {
-                console.log(newUser)
-                return res.status(201).json(newUser);   
-            }
-        })
-        .catch(error => {
-            console.error('Error al crear el usuario:', error);
-            return res.status(500).json({ message: 'Error al crear el usuario' });
+        // Generar un hash para la contraseña
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Crear el nuevo usuario con la contraseña hasheada
+        const newUser = await User.create({
+            usuario: user,
+            passwor: hashedPassword,
+            email: email
         });
+
+        res.status(201).json(newUser);
+    } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        res.status(500).json({ message: 'Error al crear el usuario' });
+    }
 
 
 }

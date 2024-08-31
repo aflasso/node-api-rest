@@ -3,7 +3,7 @@ const { bdmysql } = require('../database/MariaDbConnection');
 
 
 
-const User = bdmysql.define('Users', {
+const User = bdmysql.define('User', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
