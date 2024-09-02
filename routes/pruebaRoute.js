@@ -8,7 +8,8 @@ const { pruebaGet,
     userByActive,
     userByDeactive,
     userPost,
-    userDelete
+    userDelete,
+    logIn
     //pruebaPost,
     //pruebaPut,
     //pruebaDelete,
@@ -30,6 +31,8 @@ router.get('/active', userByActive)
 router.get('/deactive', userByDeactive)
 
 router.post('/new', userPost)
+
+router.post('/login', logIn)
 
 router.get('/:userId', userByIdGet)
 

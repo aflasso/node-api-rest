@@ -85,6 +85,7 @@ const userPost = async (req = request, res = response) => {
     try {
         // Verificar que la contraseña sea una cadena
         if (typeof password !== 'string') {
+            console.log(password)
             return res.status(400).json({ message: 'La contraseña debe ser una cadena de texto' });
         }
 
@@ -139,6 +140,41 @@ const userDelete = async (req = request, res = response) => {
 
 }
 
+const logIn = async (req = request, res = response) => {
+
+    
+    const {passwordUser, email} = req.body
+
+    try {
+        const existingUser = await User.findOne({where: {email: email}})
+
+        console.log(passwordUser)
+        console.log(existingUser)
+
+        if (existingUser) {
+
+            const ismatch = await bcrypt.compare(passwordUser, existingUser.passwor)
+
+            if (ismatch) {
+
+                return res.status(200).json({ok: true, message: "Se inicio sesion"})
+
+            }else {
+
+                return res.status(400).json({ok: false, message: "Credenciales erroneas"})
+
+            }
+
+        } else {
+            return res.status(400).json({ok: false, message: "Credenciales erroneas"})
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ok:false, msg: 'Error logeando usuario', err: error})
+    }
+
+}
+
 
 module.exports = {
     pruebaGet,
@@ -146,5 +182,6 @@ module.exports = {
     userByActive,
     userByDeactive,
     userPost,
-    userDelete
+    userDelete,
+    logIn
 }
