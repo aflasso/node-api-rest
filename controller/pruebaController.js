@@ -2,6 +2,7 @@ const {response, request} = require('express')
 const {User} = require('../models/persona');
 const { where } = require('sequelize');
 const bcrypt = require('bcrypt');
+const generarJWT = require('../helpers/generar_jwt')
 
 
 const pruebaGet = (req, res = response) => {
@@ -157,7 +158,9 @@ const logIn = async (req = request, res = response) => {
 
             if (ismatch) {
 
-                return res.status(200).json({ok: true, message: "Se inicio sesion"})
+                const token = generarJWT(existingUser.id)
+
+                return res.status(200).json({ok: true, message: "Se inicio sesion", token: token})
 
             }else {
 

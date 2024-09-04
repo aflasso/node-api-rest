@@ -1,8 +1,6 @@
 const { Router } = require('express');
 
 
-
-
 const { pruebaGet,
     userByIdGet,
     userByActive,
