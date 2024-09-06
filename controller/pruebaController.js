@@ -2,13 +2,15 @@ const {response, request} = require('express')
 const {User} = require('../models/persona');
 const { where } = require('sequelize');
 const bcrypt = require('bcrypt');
-const generarJWT = require('../helpers/generar_jwt')
+const {generarJWT} = require('../helpers/generar_jwt')
 
 
 const pruebaGet = (req, res = response) => {
 
 
     const query = req.query;
+
+    console.log("Este es el usuario que se anadio en el mid: ", req.usuario)
 
 
     //Desestructuracion de argumentos
@@ -149,16 +151,17 @@ const logIn = async (req = request, res = response) => {
     try {
         const existingUser = await User.findOne({where: {email: email}})
 
-        console.log(passwordUser)
-        console.log(existingUser)
-
         if (existingUser) {
 
             const ismatch = await bcrypt.compare(passwordUser, existingUser.passwor)
 
             if (ismatch) {
 
-                const token = generarJWT(existingUser.id)
+                console.log("id: ",existingUser.id)
+                const token = await generarJWT(existingUser.id)
+
+                console.log(token);
+                
 
                 return res.status(200).json({ok: true, message: "Se inicio sesion", token: token})
 

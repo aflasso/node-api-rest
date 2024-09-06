@@ -1,5 +1,6 @@
 const { Router } = require('express');
 
+const {validarJWT, authenticate} = require('../middlewares/validarJWT')
 
 const { pruebaGet,
     userByIdGet,
@@ -22,7 +23,7 @@ const router = Router();
 
 router.delete("/delete/:userId", userDelete)
 
-router.get('/', pruebaGet);
+router.get('/', authenticate, pruebaGet);
 
 router.get('/active', userByActive)
 

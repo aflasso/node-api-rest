@@ -6,7 +6,7 @@ const bdmysql = new Sequelize(
     '',
     {
         host: 'localhost',
-        port: '3307',
+        port: process.env.DBPORT,
         dialect: 'mariadb',
     }
 )
