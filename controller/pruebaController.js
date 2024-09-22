@@ -110,12 +110,56 @@ const userPost = async (req = request, res = response) => {
             email: email
         });
 
-        res.status(201).json(newUser);
+        return res.status(201).json(newUser);
     } catch (error) {
         console.error('Error al crear el usuario:', error);
         res.status(500).json({ message: 'Error al crear el usuario' });
     }
 
+
+}
+
+const userUpdate = async (req = request, res = response) => {
+
+    const {id, user, password, newPassword, email} = req.body
+
+    try {
+        const existingUser = await User.findByPk(id)
+
+        if (!existingUser) {
+
+            return res.status(404).json({ok: false, msg: 'No se existe ese usuario'})
+
+        } else {
+
+            const ismatch = await bcrypt.compare(password, existingUser.passwor)
+
+            if (ismatch) {
+                
+                if (newPassword != '') {
+                    const saltRounds = 10;
+                    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+                    const newUser = await existingUser.update({usuario: user, passwor: hashedPassword, email: email})
+                    return res.status(200).json({ok: true, message: "Se realizaron los cambios", user: newUser})
+                }else{ 
+                    const newUser = await existingUser.update({usuario: user, email: email})
+                    return res.status(200).json({ok: true, message: "Se realizaron los cambios", user: newUser})
+                }
+
+            }else {
+
+                return res.status(400).json({ok: false, message: "Credenciales erroneas"})
+
+            }
+
+        }
+
+
+    } catch(error){
+        console.error(error)
+        res.status(500).json({ok:false, msg: 'Error modificando usuario', err: error})
+    }
 
 }
 
@@ -134,11 +178,11 @@ const userDelete = async (req = request, res = response) => {
 
         await existingUser.destroy()
 
-        res.json({ok:true, usuario: existingUser})
+        return res.json({ok:true, usuario: existingUser})
 
     } catch (error) {
         console.error(error)
-        res.status(500).json({ok:false, msg: 'Error borrando usuario', err: error})
+        return res.status(500).json({ok:false, msg: 'Error borrando usuario', err: error})
     }
 
 }
@@ -188,6 +232,7 @@ module.exports = {
     userByActive,
     userByDeactive,
     userPost,
+    userUpdate,
     userDelete,
     logIn
 }

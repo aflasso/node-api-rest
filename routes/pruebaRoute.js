@@ -7,6 +7,7 @@ const { pruebaGet,
     userByActive,
     userByDeactive,
     userPost,
+    userUpdate,
     userDelete,
     logIn
     //pruebaPost,
@@ -23,13 +24,15 @@ const router = Router();
 
 router.delete("/delete/:userId", userDelete)
 
-router.get('/', authenticate, pruebaGet);
+router.get('/', pruebaGet);
 
 router.get('/active', userByActive)
 
 router.get('/deactive', userByDeactive)
 
 router.post('/new', userPost)
+
+router.put('/update', userUpdate)
 
 router.post('/login', logIn)
 

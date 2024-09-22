@@ -13,6 +13,25 @@ const pokemonGet = (requ =  request, res = response) => {
 
 }
 
+const pokemonGetOne = async (req = request, res = response) => {
+
+    const pokemonId = req.params.pokemonId
+
+    Pokemon.findByPk(pokemonId).then((pokemon) => {
+
+        if (pokemon) {
+            return res.status(200).json(pokemonS)
+        }else {
+            return res.status(404).json({message: 'Usuario no encontrado'})
+        }
+
+    }).catch(error => {
+        console.error('Error al buscar pokemon')
+        return res.status(500).json({message: error})
+    })
+
+}
+
 const pokemonPost  = async (req = request, res = response) => {
 
     const {id, nombre, tipo, nivel, entrenador_id} = req.body
@@ -102,4 +121,4 @@ const pokemonDelete = async (req = request, res = response) => {
 
 }
 
-module.exports = {pokemonGet, pokemonPost, pokemonPut, pokemonDelete}
+module.exports = {pokemonGet, pokemonGetOne,pokemonPost, pokemonPut, pokemonDelete}

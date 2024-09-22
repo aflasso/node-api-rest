@@ -1,6 +1,6 @@
 const {Router} = require('express')
 
-const {pokemonGet, pokemonPost, pokemonPut, pokemonDelete} = require('../controller/pokemonController')
+const {pokemonGet, pokemonGetOne, pokemonPost, pokemonPut, pokemonDelete} = require('../controller/pokemonController')
 const { route } = require('./pruebaRoute')
 
 
@@ -8,6 +8,8 @@ const { route } = require('./pruebaRoute')
 const router = Router()
 
 router.get('/', pokemonGet)
+
+router.get('/:pokemonId', pokemonGetOne)
 
 router.post('/new', pokemonPost)
 
