@@ -1,9 +1,10 @@
 const {request, response} = require("express")
 const Pokemon = require("../models/pokemon")
+const { User } = require("../models/persona")
 
 const pokemonGet = (requ =  request, res = response) => {
 
-    Pokemon.findAll().then(pokemons => {
+    Pokemon.findAll({include: [{model: User, as: 'User', attributes: ['id', 'usuario', 'email']}]}).then(pokemons => {
         console.log('Pokemons enocntrados: ', pokemons)
         return res.json(pokemons)
     })
@@ -20,9 +21,9 @@ const pokemonGetOne = async (req = request, res = response) => {
     Pokemon.findByPk(pokemonId).then((pokemon) => {
 
         if (pokemon) {
-            return res.status(200).json(pokemonS)
+            return res.status(200).json(pokemon)
         }else {
-            return res.status(404).json({message: 'Usuario no encontrado'})
+            return res.status(404).json({message: 'Pokemon no encontrado'})
         }
 
     }).catch(error => {
@@ -71,7 +72,7 @@ const pokemonPost  = async (req = request, res = response) => {
 
 const pokemonPut = async (req = request, res = response) => {
 
-    const {id, nivel} =  req.body
+    const {id, nivel, nombre} =  req.body
 
     try {
         const existingPokemon = await Pokemon.findByPk(id)
@@ -83,7 +84,7 @@ const pokemonPut = async (req = request, res = response) => {
 
         }
 
-        const newPokemon = await existingPokemon.update({nivel: nivel})
+        const newPokemon = await existingPokemon.update({nivel: nivel, nombre: nombre})
 
         console.log('Nuevo pokemon: ', newPokemon)
         return res.status(200).json({ok: true, message: newPokemon})
