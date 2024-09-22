@@ -32,7 +32,8 @@ const Pokemon = bdmysql.define('pokemon', {
         references: {
             model: User,
             key: 'id'
-        }
+        },
+        allowNull: true
     },
 
     fecha_captura: {
@@ -55,6 +56,6 @@ const Pokemon = bdmysql.define('pokemon', {
 )
 
 User.hasMany(Pokemon, {foreignKey: 'entrenador_id'})
-Pokemon.belongsTo(User, {foreignKey: 'entrenador_id', onDelete: 'CASCADE'})
+Pokemon.belongsTo(User, {foreignKey: 'entrenador_id', onDelete: 'SET NULL'})
 
 module.exports = Pokemon
