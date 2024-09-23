@@ -2,13 +2,13 @@ const { request, response } = require('express')
 const jwt = require('jsonwebtoken')
 
 
-const generarJWT = (uid = '') => {
+const generarJWT = (user) => {
 
     return new Promise((resolve, reject) => {
 
-        const payload = {uid}
-
-        jwt.sign(payload, process.env.SECRETKEY, {expiresIn: '4h'}, (err, token) => {
+        const {id, role} = user
+ 
+        jwt.sign({id, role}, process.env.SECRETKEY, {expiresIn: '4h'}, (err, token) => {
 
             if (err){
                 console.error('Token no válido: ', err.message);
