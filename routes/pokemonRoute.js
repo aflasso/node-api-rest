@@ -1,7 +1,7 @@
 const {Router} = require('express')
 
 const {pokemonGet, pokemonGetOne, pokemonPost, pokemonPut, pokemonDelete} = require('../controller/pokemonController')
-const { route } = require('./pruebaRoute')
+
 
 
 
