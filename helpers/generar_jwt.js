@@ -6,9 +6,9 @@ const generarJWT = (user) => {
 
     return new Promise((resolve, reject) => {
 
-        const {id, role} = user
+        const {id, rol} = user
  
-        jwt.sign({id, role}, process.env.SECRETKEY, {expiresIn: '4h'}, (err, token) => {
+        jwt.sign({id, rol}, process.env.SECRETKEY, {expiresIn: '4h'}, (err, token) => {
 
             if (err){
                 console.error('Token no válido: ', err.message);

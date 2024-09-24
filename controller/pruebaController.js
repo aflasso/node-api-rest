@@ -202,7 +202,7 @@ const logIn = async (req = request, res = response) => {
             if (ismatch) {
 
                 console.log("id: ",existingUser.id)
-                const token = await generarJWT(existingUser.id)
+                const token = await generarJWT(existingUser)
 
                 console.log(token);
                 
@@ -211,12 +211,12 @@ const logIn = async (req = request, res = response) => {
 
             }else {
 
-                return res.status(400).json({ok: false, message: "Credenciales erroneas"})
+                return res.status(401).json({ok: false, message: "Credenciales erroneas"})
 
             }
 
         } else {
-            return res.status(400).json({ok: false, message: "Credenciales erroneas"})
+            return res.status(401).json({ok: false, message: "Credenciales erroneas"})
         }
     } catch (error) {
         console.error(error)

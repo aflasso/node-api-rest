@@ -26,6 +26,11 @@ const User = bdmysql.define('User', {
     },
     activo: {
         type: DataTypes.TINYINT
+    },
+    rol: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'user'
     }
 
 },

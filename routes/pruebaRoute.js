@@ -22,21 +22,21 @@ const { pruebaGet,
 const router = Router();
 
 
-router.delete("/delete/:userId", userDelete)
+router.delete("/delete/:userId", authenticate,userDelete)
 
-router.get('/', pruebaGet);
+router.get('/', authenticate ,pruebaGet);
 
-router.get('/active', userByActive)
+router.get('/active', authenticate, userByActive)
 
-router.get('/deactive', userByDeactive)
+router.get('/deactive', authenticate, userByDeactive)
 
-router.post('/new', userPost)
+router.post('/new', authenticate, userPost)
 
-router.put('/update', userUpdate)
+router.put('/update', authenticate, userUpdate)
 
 router.post('/login', logIn)
 
-router.get('/:userId', userByIdGet)
+router.get('/:userId' , authenticate, userByIdGet)
 
 
 //router.post('/', usuariosPost);

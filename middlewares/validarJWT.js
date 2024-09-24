@@ -31,9 +31,9 @@ const authenticate = async (req = request, res = response, next) => {
 
     try {
         
-        const {uid} = await validarJWT(token)
+        const {id, rol} = await validarJWT(token)
 
-        const usuario = await User.findByPk(uid)
+        const usuario = await User.findByPk(id)
 
         if (!usuario) {
 
